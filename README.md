@@ -14,6 +14,8 @@ Doing this is not recommended as it removes all security.
 This removes the need for config files as this allows all users on the system to use RootDO without password.
 If you do this, you can also remove rdo.h, as it is only a config file, which this doesn't need.
 
+Keep in mind thet the performance gain in real world applications is close to nothing.
+
 ### Installation
 
 You can clone and build rdo with the following set of commands:
@@ -36,18 +38,4 @@ sudo make uninstall
 
 ```sh
 rdo [command]
-```
-
-### Benchmarks
-
-The benchmark: Execute `whoami` (GNU coreutils 9.1) 10000 times.
-
-Keep in mind thet the performance gain in real world applications is close to nothing.
-
-But it's fun!
-
-The benchmark can be executed through a Docker container by running:
-
-```
-make bench-build bench-run
 ```
