@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
 	    printf("Failed to read password.\n");
 	    return 0;
 	}
-	if(strcmp(pass, user->pw_passwd)){
+	if(strcmp(pass, password)){
 	    printf("Wrong password.\n");
 	    return 1;
 	}
