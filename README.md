@@ -1,6 +1,13 @@
 # RootDO Minimal
 
-This project aims to be a very slim alternative to sudo, doas and the original rootdo.
+This project aims to be a very slim alternative to sudo, doas and the original RootDO.
+
+Unlike the original project, this has way fewer lines of code.
+Any configuration is made by editing the sourcecode.
+The configuration file is rdo.h, but any desired features can be patched into rdo.c.
+After editing rdo.h the program must be recompiled.
+Doing things this way is more efficient than having a separate config file.
+rdo.h is well commented and the code base is very small, so the source code if the documentation.
 
 ### Installation
 
