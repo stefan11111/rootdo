@@ -1,0 +1,23 @@
+#!/bin/sh
+
+programs="$@"
+
+if [ -z "$programs" ]; then
+    echo 'No programs specified (rdo, doas or sudo)'
+    exit 1
+fi
+
+for program in $programs; do
+    if ! which "$program" >/dev/null 2>&1; then
+        echo "Command not found: $program"
+        exit 1
+    fi
+done
+
+for program in $programs; do
+    time -f "$program %es" -o benchmark-results -a whoami-test "$program"
+done
+
+time -f "baseline %es" -o benchmark-results -a whoami-test
+
+cat benchmark-results

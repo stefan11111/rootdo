@@ -1,0 +1,7 @@
+#!/bin/sh
+
+program="$1"
+
+for _ in $(seq 1 10000); do
+    echo rdo123 | $program whoami >/dev/null
+done
