@@ -26,12 +26,3 @@ uninstall:
 
 clean:
 	rm rdo
-
-bench-clean:
-	docker rmi -f rdo-benchmark
-
-bench-build: bench-clean
-	docker buildx build -t rdo-benchmark -f benchmark/Dockerfile .
-
-bench-run:
-	docker run --rm -t rdo-benchmark
