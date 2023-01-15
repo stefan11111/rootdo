@@ -9,7 +9,7 @@ After editing rdo.h the program must be recompiled.
 Doing things this way is more efficient than having a separate config file.
 rdo.h is well commented and the code base is very small, so the source code if the documentation.
 
-You can remove rdo.c and replace it with rdo.c.noconfig.
+You can remove rdo.c and replace it with rdo.noconfig.c.
 Doing this is not recommended as it removes all security.
 This removes the need for config files as this allows all users on the system to use RootDO without password.
 If you do this, you can also remove rdo.h, as it is only a config file, which this doesn't need.
