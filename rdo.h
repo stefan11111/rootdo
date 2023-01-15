@@ -4,6 +4,7 @@
 #include <pwd.h>
 #include <string.h>
 #include <shadow.h>
+#include <termios.h>
 
 #define PWD_MAX 200
 

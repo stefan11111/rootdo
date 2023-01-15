@@ -37,11 +37,19 @@ int main(int argc, char** argv) {
     }
 
     char pass[PWD_MAX];
-    printf("Enter the password:\n");
-    if(scanf("%s", pass)!=1){
+    struct termios term;
+    tcgetattr(1, &term);
+    term.c_lflag &= ~ECHO;
+    tcsetattr(1, 0, &term);
+    term.c_lflag |= ECHO;
+    if (write(1, "Enter the password: ", 20) < 0)
+	tcsetattr(1, 0, &term);
+    if(scanf("%s", pass) != 1){
 	printf("Error reading password.\n");
+	tcsetattr(1, 0, &term);
 	return 0;
     }
+    tcsetattr(1, 0, &term);
 
     struct spwd* shadow = getspnam(user->pw_name);
 
