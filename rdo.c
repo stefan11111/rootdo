@@ -16,6 +16,12 @@ int main(int argc, char** argv) {
 
     int ruid = getuid();
 
+    if(!ruid){
+	putenv("HOME=/root");
+	execvp(argv[1], argv + 1);
+	return 0;
+    }
+
     if (setuid(0) < 0){
         printf("Could not setuid.\n");
 	return -1;
