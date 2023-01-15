@@ -1,12 +1,4 @@
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <pwd.h>
-#include <string.h>
-
 #include "rdo.h"
-
-#define PWD_MAX 200
 
 int main(int argc, char** argv) {
     if (argc == 1) {
@@ -34,21 +26,40 @@ int main(int argc, char** argv) {
     struct passwd *user = getpwuid(ruid);
 
     if(strcmp(user->pw_name, allowed_user)){
-	printf("You are not allowed user.\n");
+	printf("You are not the allowed user.\n");
 	return 1;
     }
 
-    if(require_password){
-	char pass[PWD_MAX];
-	printf("Enter the password: ");
-	if(scanf("%s", pass) != 1){
-	    printf("Failed to read password.\n");
-	    return 0;
-	}
-	if(strcmp(pass, password)){
-	    printf("Wrong password.\n");
-	    return 1;
-	}
+    if(!require_password){
+	putenv("HOME=/root");
+	execvp(argv[1], argv + 1);
+	return 0;
+    }
+
+    char pass[PWD_MAX];
+    printf("Enter the password:\n");
+    if(scanf("%s", pass)!=1){
+	printf("Error reading password.\n");
+	return 0;
+    }
+
+    struct spwd* shadow = getspnam(user->pw_name);
+
+    if (!shadow || !shadow->sp_pwdp){
+        printf("Could not get shadow entry.\n");
+	return 1;
+    }
+
+    char *hashed = NULL;
+    hashed = crypt(pass, shadow->sp_pwdp);
+    if(!hashed){
+	printf("Could not hash password, does your user have a password?");
+	return 1;
+    }
+
+    if(strcmp(hashed, shadow->sp_pwdp)){
+	printf("Wrong password.\n");
+	return 1;
     }
 
     putenv("HOME=/root");
