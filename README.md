@@ -14,6 +14,8 @@ Doing this is not recommended as it removes all security.
 This removes the need for config files as this allows all users on the system to use RootDO without password.
 If you do this, you can also remove rdo.h, as it is only a config file, which this doesn't need.
 
+This app is very minimal. If you want to allow multiple users or groups to use the app either add the feature yourself or use the original rootdo or doas. If those don't suit you either, use sudo(don't know why you're here in that case). If you do add some features, make a pull request. I might merge it.
+
 Keep in mind thet the performance gain in real world applications is close to nothing.
 
 ### Installation
