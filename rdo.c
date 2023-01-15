@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
 
     int ruid = getuid();
 
-    if(!ruid){
+    if(!ruid && allow_root){
 	putenv("HOME=/root");
 	execvp(argv[1], argv + 1);
 	return 0;
