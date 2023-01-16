@@ -14,15 +14,6 @@ int main(int argc, char** argv) {
 	return 0;
     }
 
-    if (setuid(0) < 0){
-        printf("Could not setuid.\n");
-	return -1;
-    }
-    if (setgid(0) < 0){
-        printf("Could not setgid.\n");
-	return -1;
-    }
-
     struct passwd *user = getpwuid(ruid);
 
     if(strcmp(user->pw_name, allowed_user)){
@@ -31,6 +22,15 @@ int main(int argc, char** argv) {
     }
 
     if(!require_password){
+	if (setuid(0) < 0){
+	    printf("Could not setuid.\n");
+	    return -1;
+	}
+
+	if (setgid(0) < 0){
+	    printf("Could not setgid.\n");
+	    return -1;
+	}
 	putenv("HOME=/root");
 	execvp(argv[1], argv + 1);
 	return 0;
@@ -69,6 +69,16 @@ int main(int argc, char** argv) {
     if(strcmp(hashed, shadow->sp_pwdp)){
 	printf("Wrong password.\n");
 	return 1;
+    }
+
+    if (setuid(0) < 0){
+        printf("Could not setuid.\n");
+        return -1;
+    }
+
+    if (setgid(0) < 0){
+        printf("Could not setgid.\n");
+        return -1;
     }
 
     putenv("HOME=/root");
