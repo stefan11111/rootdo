@@ -6,35 +6,43 @@ Unlike the original project, this has way fewer lines of code.
 Any configuration is made by editing the sourcecode.
 The configuration file is rdo.h, but any desired features can be patched into rdo.c.
 After editing rdo.h the program must be recompiled.
-Doing things this way is more efficient than having a separate config file.
-rdo.h is well commented and the code base is very small, so the source code if the documentation.
+Doing things this way keeps rdo fast, secure and simple.
+rdo.h is well commented and the code base is very small, so the source code is the documentation.
 
-You can remove rdo.c and replace it with rdo.noconfig.c.
-Doing this is not recommended as it removes all security.
-This removes the need for config files as this allows all users on the system to use RootDO without password.
-If you do this, you can also remove rdo.h, as it is only a config file, which this doesn't need.
+If you want to allow multiple users or groups to use the app either add the feature yourself or use the original rootdo or doas. If those don't suit you either, use sudo(don't know why you're here in that case). If you do add some features, make a pull request. I might merge it.
 
-This app is very minimal. If you want to allow multiple users or groups to use the app either add the feature yourself or use the original rootdo or doas. If those don't suit you either, use sudo(don't know why you're here in that case). If you do add some features, make a pull request. I might merge it.
+This app is very minimal. The base app is under 100 lines of code. The noconfig option reduces that to under 30 lines of code.
 
-Keep in mind thet the performance gain in real world applications is close to nothing.
+Keep in mind that the performance gain in real world applications is close to nothing.
 
 ### Installation
 
-You can clone and build rdo with the following set of commands:
+You can clone and build rootdo with the following set of commands (as root if necessary):
 
 ```sh
-git clone https://codeberg.org/sw1tchbl4d3/rdo
-cd rdo
+git clone https://github.com/stefan11111/rootdo.git
+cd rootdo
 make
-sudo make install
+make install
 ```
-
+If you just want a word to type before commands that require root priviledges(allow all users to use rdo with no password) you can do the following (as root if necessary) :
+ 
+```sh
+git clone https://github.com/stefan11111/rootdo.git
+cd rootdo
+make noconfig
+make install
+```
 Then you're good to go!
 
-To uninstall:
+To uninstall (run as root if necessary):
 ```sh
-sudo make uninstall
+make uninstall
 ```
+
+For convenience, you can alias rdo to doas or sudo in your .bashrc or just rename the binary.
+By default it is installed in /usr/local/bin.
+If you renamed the binary, you can not use make uninstall.
 
 ### Usage
 
