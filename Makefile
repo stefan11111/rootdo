@@ -15,13 +15,13 @@ debug: rdo.c
 	${CC} ${CFLAGS_DEBUG} rdo.c -o rdo ${LIBS}
 
 install: rdo
-	cp rdo /usr/local/bin
-	chown root:root /usr/local/bin/rdo
-	chmod 755 /usr/local/bin/rdo
-	chmod u+s /usr/local/bin/rdo
+	cp rdo ${DESTDIR}/usr/local/bin
+	chown root:root ${DESTDIR}/usr/local/bin/rdo
+	chmod 755 ${DESTDIR}/usr/local/bin/rdo
+	chmod u+s ${DESTDIR}/usr/local/bin/rdo
 
 uninstall:
-	rm /usr/local/bin/rdo
+	rm ${DESTDIR}/usr/local/bin/rdo
 
 clean:
 	rm rdo
