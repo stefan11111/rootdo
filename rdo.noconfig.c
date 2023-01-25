@@ -13,11 +13,11 @@ int main(int argc, char** argv) {
 	return 1;
     }
 
-    if (setuid(0) < 0){
+    if (setgid(0) < 0){
         printf("Could not setuid\n");
 	return 1;
     }
-    if (setgid(0) < 0){
+    if (setuid(0) < 0){
         printf("Could not setgid\n");
 	return 1;
     }

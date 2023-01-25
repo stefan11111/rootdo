@@ -1,5 +1,26 @@
 #include "rdo.h"
 
+int run_program(char **program){
+    if (geteuid() != 0){
+        printf("The rdo binary needs to be installed as SUID. \n");
+        return 1;
+    }
+
+    if (setgid(0) < 0){
+        printf("Could not setuid.\n");
+        return -1;
+    }
+
+    if (setuid(0) < 0){
+        printf("Could not setgid.\n");
+        return -1;
+    }
+
+    putenv("HOME=/root");
+    execvp(*program, program);
+    return 0;
+}
+
 int main(int argc, char** argv) {
     if (argc == 1) {
         printf("Usage: %s [command]\n", argv[0]);
@@ -22,18 +43,7 @@ int main(int argc, char** argv) {
     }
 
     if(!REQUIRE_PASSWORD){
-	if (setuid(0) < 0){
-	    printf("Could not setuid.\n");
-	    return -1;
-	}
-
-	if (setgid(0) < 0){
-	    printf("Could not setgid.\n");
-	    return -1;
-	}
-	putenv("HOME=/root");
-	execvp(argv[1], argv + 1);
-	return 0;
+	return run_program(argv + 1);
     }
 
     char pass[PWD_MAX + 1];
@@ -71,17 +81,5 @@ int main(int argc, char** argv) {
 	return 1;
     }
 
-    if (setuid(0) < 0){
-        printf("Could not setuid.\n");
-        return -1;
-    }
-
-    if (setgid(0) < 0){
-        printf("Could not setgid.\n");
-        return -1;
-    }
-
-    putenv("HOME=/root");
-    execvp(argv[1], argv + 1);
-    return 0;
+    return run_program(argv + 1);
 }
