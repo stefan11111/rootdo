@@ -15,7 +15,7 @@ int run_program(char **program){
     }
     putenv("HOME=/root");
     if (execvp(*program, program) == -1){
-        printf("%s: command not found", *program);
+        printf("%s: command not found\n", *program);
         return -1;
     }
     return 0;
