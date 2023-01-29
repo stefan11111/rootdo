@@ -23,6 +23,9 @@ int main(int argc, char** argv) {
     }
 
     putenv("HOME=/root");
-    execvp(argv[1], argv + 1);
+    if(execvp(argv[1], argv + 1) == -1){
+        printf("%s: command not found", argv[1]);
+        return 1;
+    }
     return 0;
 }
