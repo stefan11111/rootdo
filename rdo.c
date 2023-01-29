@@ -5,19 +5,19 @@ int run_program(char **program){
         printf("The rdo binary needs to be installed as SUID. \n");
         return 1;
     }
-
     if (setgid(0) < 0){
         printf("Could not setuid.\n");
         return -1;
     }
-
     if (setuid(0) < 0){
         printf("Could not setgid.\n");
         return -1;
     }
-
     putenv("HOME=/root");
-    execvp(*program, program);
+    if (execvp(*program, program) == -1){
+        printf("%s: command not found", *program);
+        return -1;
+    }
     return 0;
 }
 
