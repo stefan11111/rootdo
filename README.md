@@ -3,7 +3,7 @@
 This project aims to be a very slim alternative to sudo, doas and the original RootDO.
 
 Unlike the original project, this has way fewer lines of code.
-Any configuration is made by editing the sourcecode.
+Any configuration is made by editing the source code.
 The configuration file is rdo.h, but any desired features can be patched into rdo.c.
 After editing rdo.h the program must be recompiled.
 Doing things this way keeps rdo fast, secure and simple.
@@ -42,7 +42,6 @@ make uninstall
 
 For convenience, you can alias rdo to doas or sudo in your .bashrc or just rename the binary.
 By default it is installed in /usr/local/bin.
-If you renamed the binary, you can not use make uninstall.
 
 ### Usage
 

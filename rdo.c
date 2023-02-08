@@ -1,6 +1,6 @@
 #include "rdo.h"
 
-int run_program(char **program) {
+static int run_program(char **program) {
     if (geteuid() != 0) {
         printf("The rdo binary needs to be installed as SUID. \n");
         return 1;
