@@ -5,16 +5,16 @@ CFLAGS_STATIC = ${CFLAGS_RELEASE} -static-pie
 LIBS = -lcrypt
 CC = gcc
 
-all: rdo.c
+all: rdo.c rdo.h
 	${CC} ${CFLAGS_RELEASE} rdo.c -o rdo ${LIBS}
 
-static: rdo.c
+static: rdo.c rdo.h
 	${CC} ${CFLAGS_STATIC} rdo.c -o rdo ${LIBS}
 
-debug: rdo.c
+debug: rdo.c rdo.h
 	${CC} ${CFLAGS_DEBUG} rdo.c -o rdo ${LIBS}
 
-noconfig: rdo.noconfig.c
+noconfig: rdo.noconfig.c rdo.h
 	${CC} ${CFLAGS_RELEASE} rdo.noconfig.c -o rdo ${LIBS}
 
 install: rdo
