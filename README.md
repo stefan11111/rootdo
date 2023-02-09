@@ -11,6 +11,8 @@ rdo.h is well commented and the code base is very small, so the source code is t
 
 If you want to allow multiple users or groups to use the app either add the feature yourself or use the original rootdo or doas. If those don't suit you either, use sudo(don't know why you're here in that case). If you do add some features, make a pull request. I might merge it.
 
+rdo -e is an alias for rdoedit. in order for it to work rdoedit must be installed. The app can be used without it, but rdo -e will not work.
+
 This app is very minimal. The base app is under 100 lines of code. The noconfig option reduces that to under 30 lines of code.
 
 Keep in mind that the performance gain in real world applications is close to nothing.
@@ -47,4 +49,10 @@ By default it is installed in /usr/local/bin.
 
 ```sh
 rdo [command]
+```
+
+or
+
+```sh
+rdo -e [files]
 ```
