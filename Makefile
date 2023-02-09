@@ -14,7 +14,7 @@ static: rdo.c rdo.h
 debug: rdo.c rdo.h
 	${CC} ${CFLAGS_DEBUG} rdo.c -o rdo ${LIBS}
 
-noconfig: rdo.noconfig.c rdo.h
+noconfig: rdo.noconfig.c
 	${CC} ${CFLAGS_RELEASE} rdo.noconfig.c -o rdo ${LIBS}
 
 install: rdo
