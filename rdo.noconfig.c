@@ -11,7 +11,7 @@ int main(int argc, char** argv) {
 
     if (!strcmp(argv[1], "-e")) {
         if(argc == 2) {
-            printf("Usage: rdo -e [files]\n");
+            printf("Usage: %s -e [files]\n", argv[0]);
             return 0;
         }
         *(argv + 1) = "rdoedit";

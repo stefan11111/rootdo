@@ -23,13 +23,13 @@ static int run_program(char **program) {
 
 int main(int argc, char** argv) {
     if (argc == 1) {
-        printf("Usage: rdo [command]\n");
+        printf("Usage: %s [command]\n", argv[0]);
         return 0;
     }
 
     if (!strcmp(argv[1], "-e")) {
         if(argc == 2) {
-            printf("Usage: rdo -e [files]\n");
+            printf("Usage: %s -e [files]\n", argv[0]);
             return 0;
         }
         *(argv + 1) = "rdoedit";
