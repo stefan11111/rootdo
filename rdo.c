@@ -33,7 +33,9 @@ int main(int argc, char** argv) {
             return 0;
         }
         *(argv + 1) = "rdoedit";
-        execvp("rdoedit", argv + 1);
+        if (execvp("rdoedit", argv + 1) == -1) {
+            printf("rdoedit is not installed\n");
+        }
         return 0;
     }
 
