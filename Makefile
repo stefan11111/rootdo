@@ -15,7 +15,7 @@ debug: rdo.c rdo.h
 	${CC} ${CFLAGS_DEBUG} rdo.c -o rdo ${LIBS}
 
 noconfig: rdo.noconfig.c
-	${CC} ${CFLAGS_RELEASE} rdo.noconfig.c -o rdo ${LIBS}
+	${CC} ${CFLAGS_RELEASE} rdo.noconfig.c -o rdo
 
 install: rdo
 	cp rdo ${DESTDIR}/usr/local/bin
