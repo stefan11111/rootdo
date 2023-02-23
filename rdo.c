@@ -54,10 +54,10 @@ int main(int argc, char** argv) {
 	return 1;
     }
 
-    if (!REQUIRE_PASSWORD) {
-	return run_program(argv + 1);
-    }
-
+#ifndef REQUIRE_PASSWORD
+    return run_program(argv + 1);
+#endif
+#ifdef REQUIRE_PASSWORD
     char pass[PWD_MAX + 1];
     struct termios term;
     tcgetattr(1, &term);
@@ -95,4 +95,5 @@ int main(int argc, char** argv) {
     }
 
     return run_program(argv + 1);
+#endif
 }
