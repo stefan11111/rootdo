@@ -53,10 +53,6 @@ int main(int argc, char** argv) {
 	printf("You are not the allowed user.\n");
 	return 1;
     }
-
-#ifndef REQUIRE_PASSWORD
-    return run_program(argv + 1);
-#endif
 #ifdef REQUIRE_PASSWORD
     char pass[PWD_MAX + 1];
     struct termios term;
@@ -93,7 +89,6 @@ int main(int argc, char** argv) {
 	printf("Wrong password.\n");
 	return 1;
     }
-
-    return run_program(argv + 1);
 #endif
+    return run_program(argv + 1);
 }
