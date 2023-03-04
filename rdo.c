@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
         printf("Usage: %s [command]\n", argv[0]);
         return 0;
     }
-
+#ifdef RDOEDIT
     if (!strcmp(argv[1], "-e")) {
         if(argc == 2) {
             printf("Usage: %s -e [files]\n", argv[0]);
@@ -38,15 +38,18 @@ int main(int argc, char** argv) {
         }
         return 0;
     }
-
+#endif
     int ruid = getuid();
-
-    if (!ruid && ALLOW_ROOT) {
-	putenv("HOME=/root");
-	execvp(argv[1], argv + 1);
-	return 0;
+    if (!ruid) {
+#ifndef ALLOW_ROOT
+        printf("You are not the allowed user.\n");
+        return 1;
+#else
+        putenv("HOME=/root");
+        execvp(argv[1], argv + 1);
+        return 0;
+#endif
     }
-
     struct passwd *user = getpwuid(ruid);
 
     if (strcmp(user->pw_name, ALLOWED_USER)) {
