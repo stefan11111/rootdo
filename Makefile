@@ -20,8 +20,7 @@ noconfig: rdo.noconfig.c
 install: rdo
 	cp rdo ${DESTDIR}/usr/local/bin
 	chown root:root ${DESTDIR}/usr/local/bin/rdo
-	chmod 755 ${DESTDIR}/usr/local/bin/rdo
-	chmod u+s ${DESTDIR}/usr/local/bin/rdo
+	chmod 4755 ${DESTDIR}/usr/local/bin/rdo
 
 uninstall:
 	rm ${DESTDIR}/usr/local/bin/rdo
