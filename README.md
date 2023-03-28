@@ -9,8 +9,6 @@ After editing rdo.h the program must be recompiled.
 Doing things this way keeps rdo fast, secure and simple.
 rdo.h is well commented and the code base is very small, so the source code is the documentation.
 
-If you want to allow multiple users or groups to use the app either add the feature yourself or use the original rootdo or doas. If those don't suit you either, use sudo(don't know why you're here in that case). If you do add some features, make a pull request. I might merge it.
-
 rdo -e is an alias for rdoedit. in order for it to work rdoedit must be installed. The app can be used without it, but rdo -e will not work.
 
 rdo -u allows one to speciffy the user who the command should be executed as.

@@ -62,11 +62,34 @@ int main(int argc, char** argv) {
         printf("could not get UID\n");
         return 0;
     }
-
-    if (strcmp(user->pw_name, ALLOWED_USER)) {
-	printf("You are not the allowed user.\n");
-	return 1;
+#ifdef ALLOWED_GROUP
+    struct group *grp = getgrnam(ALLOWED_GROUP);
+    if (!grp) {
+        if (strcmp(user->pw_name, ALLOWED_USER)) {
+	    printf("You are not the allowed user.\n");
+	    return 1;
+        }
     }
+    else {
+        char **ptr = grp->gr_mem;
+        char ok = 0;
+        while(*ptr) {
+            if (!strcmp(*(ptr++), user->pw_name)) {
+                ok = 1;
+                break;
+            }
+        }
+        if (strcmp(user->pw_name, ALLOWED_USER) && !ok) {
+            printf("You are not the allowed user.\n");
+            return 1;
+        }
+    }
+#else
+    if (strcmp(user->pw_name, ALLOWED_USER)) {
+        printf("You are not the allowed user.\n");
+        return 1;
+    }
+#endif
 #ifdef REQUIRE_PASSWORD
     char pass[PWD_MAX + 1];
     struct termios term;
