@@ -1,15 +1,21 @@
 #include "rdo.h"
 
-static int run_program(char **program) {
+static int run_program(char **program, struct passwd *user) {
+    uid_t uid = 0;
+    gid_t gid = 0;
+    if (user) {
+        uid = user->pw_uid;
+        gid = user->pw_gid;
+    }
     if (geteuid() != 0) {
         printf("The rdo binary needs to be installed as SUID. \n");
         return 1;
     }
-    if (setgid(0) < 0) {
+    if (setgid(gid) < 0) {
         printf("Could not setuid.\n");
         return -1;
     }
-    if (setuid(0) < 0) {
+    if (setuid(uid) < 0) {
         printf("Could not setgid.\n");
         return -1;
     }
@@ -52,6 +58,11 @@ int main(int argc, char** argv) {
     }
     struct passwd *user = getpwuid(ruid);
 
+    if (!user) {
+        printf("could not get UID\n");
+        return 0;
+    }
+
     if (strcmp(user->pw_name, ALLOWED_USER)) {
 	printf("You are not the allowed user.\n");
 	return 1;
@@ -93,5 +104,9 @@ int main(int argc, char** argv) {
 	return 1;
     }
 #endif
-    return run_program(argv + 1);
+    if (!strcmp(argv[1], "-u")) {
+        run_program(argv + 3, getpwnam(argv[2]));
+        return 0;
+    }
+    return run_program(argv + 1, NULL);
 }

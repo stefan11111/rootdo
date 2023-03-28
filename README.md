@@ -13,6 +13,8 @@ If you want to allow multiple users or groups to use the app either add the feat
 
 rdo -e is an alias for rdoedit. in order for it to work rdoedit must be installed. The app can be used without it, but rdo -e will not work.
 
+rdo -u allows one to speciffy the user who the command should be executed as.
+
 This app is very minimal. The base app is under 100 sloc. The noconfig option reduces that to under 40 sloc.
 
 Keep in mind that the performance gain in real world applications is close to nothing.
@@ -48,11 +50,5 @@ By default it is installed in /usr/local/bin.
 ### Usage
 
 ```sh
-rdo [command]
-```
-
-or
-
-```sh
-rdo -e [files]
+rdo [-u -e] [command]
 ```
