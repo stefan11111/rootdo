@@ -98,12 +98,15 @@ int main(int argc, char** argv) {
     tcsetattr(1, 0, &term);
     term.c_lflag |= ECHO;
     if (write(1, "Enter the password: ", 20) < 0) {
-	tcsetattr(1, 0, &term);
+        tcsetattr(1, 0, &term);
     }
     if (scanf("%200s", pass) != 1) {
-	printf("Error reading password.\n");
-	tcsetattr(1, 0, &term);
-	return 0;
+    #ifdef HARDENED
+        memset(pass, 0, sizeof(pass));
+    #endif
+        printf("Error reading password.\n");
+        tcsetattr(1, 0, &term);
+        return 0;
     }
     tcsetattr(1, 0, &term);
     printf("\n");
