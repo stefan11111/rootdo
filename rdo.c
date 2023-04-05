@@ -133,6 +133,10 @@ int main(int argc, char** argv) {
     }
 #endif
     if (!strcmp(argv[1], "-u")) {
+        if (argc < 4) {
+            printf("Usage: %s [-u] [user] [command]\n", argv[0]);
+            return 0;
+        }
         run_program(argv + 3, getpwnam(argv[2]));
         return 0;
     }
