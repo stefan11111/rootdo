@@ -100,22 +100,23 @@ int main(int argc, char** argv) {
     if (write(1, "Enter the password: ", 20) < 0) {
         tcsetattr(1, 0, &term);
     }
-    if (scanf("%200s", pass) != 1) {
-    #ifdef HARDENED
+    int n = read(0, pass, PWD_MAX);
+    if (n <= 0) {
+#ifdef HARDENED
         memset(pass, 0, sizeof(pass));
-    #endif
+#endif
         printf("Error reading password.\n");
         tcsetattr(1, 0, &term);
         return 0;
     }
     tcsetattr(1, 0, &term);
     printf("\n");
-
+    pass[n - 1] = '\0';
     struct spwd* shadow = getspnam(user->pw_name);
 
     if (!shadow || !shadow->sp_pwdp) {
         printf("Could not get shadow entry.\n");
-	return 1;
+        return 1;
     }
 
     char *hashed = crypt(pass, shadow->sp_pwdp);
@@ -123,13 +124,12 @@ int main(int argc, char** argv) {
     memset(pass, 0, sizeof(pass));
 #endif
     if (!hashed) {
-	printf("Could not hash password, does your user have a password?");
-	return 1;
+        printf("Could not hash password, does your user have a password?");
+        return 1;
     }
-
     if (strcmp(hashed, shadow->sp_pwdp)) {
-	printf("Wrong password.\n");
-	return 1;
+        printf("Wrong password.\n");
+        return 1;
     }
 #endif
     if (!strcmp(argv[1], "-u")) {
