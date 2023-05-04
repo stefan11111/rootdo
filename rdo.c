@@ -48,6 +48,14 @@ int main(int argc, char** argv) {
             return 0;
         }
         *(argv + 1) = "rdoedit";
+        if (setgid(getgid()) < 0) {
+            printf("Could not setgid.\n");
+            return -1;
+        }
+        if (setuid(getuid()) < 0) {
+            printf("Could not setuid.\n");
+            return -1;
+        }
         if (execvp("rdoedit", argv + 1) == -1) {
             printf("rdoedit is not installed\n");
         }
