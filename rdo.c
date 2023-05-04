@@ -12,11 +12,11 @@ static int run_program(char **program, struct passwd *user) {
         return 1;
     }
     if (setgid(gid) < 0) {
-        printf("Could not setuid.\n");
+        printf("Could not setgid.\n");
         return -1;
     }
     if (setuid(uid) < 0) {
-        printf("Could not setgid.\n");
+        printf("Could not setuid.\n");
         return -1;
     }
     putenv("HOME=/root");
@@ -25,6 +25,15 @@ static int run_program(char **program, struct passwd *user) {
         return -1;
     }
     return 0;
+}
+
+static void* erase_from_memory(void *s, size_t n)
+{
+    volatile unsigned char *p = s;
+    while(n--) {
+        *p++ = 0;
+    }
+    return s;
 }
 
 int main(int argc, char** argv) {
@@ -103,7 +112,7 @@ int main(int argc, char** argv) {
     int n = read(0, pass, PWD_MAX);
     if (n <= 0) {
 #ifdef HARDENED
-        memset(pass, 0, sizeof(pass));
+        erase_from_memory(pass, sizeof(pass));
 #endif
         printf("Error reading password.\n");
         tcsetattr(1, 0, &term);
@@ -121,7 +130,7 @@ int main(int argc, char** argv) {
 
     char *hashed = crypt(pass, shadow->sp_pwdp);
 #ifdef HARDENED
-    memset(pass, 0, sizeof(pass));
+    erase_from_memory(pass, sizeof(pass));
 #endif
     if (!hashed) {
         printf("Could not hash password, does your user have a password?");
