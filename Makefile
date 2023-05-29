@@ -4,6 +4,7 @@ CFLAGS_DEBUG = ${CFLAGS} -O0 -g -fsanitize=undefined
 CFLAGS_STATIC = ${CFLAGS_RELEASE} -static-pie
 LIBS = -lcrypt
 CC = gcc
+PREFIX ?= /usr/local
 
 all: rdo.c rdo.h
 	${CC} ${CFLAGS_RELEASE} rdo.c -o rdo ${LIBS}
@@ -18,12 +19,13 @@ noconfig: rdo.noconfig.c
 	${CC} ${CFLAGS_RELEASE} rdo.noconfig.c -o rdo
 
 install: rdo
-	cp rdo ${DESTDIR}/usr/local/bin
-	chown root:root ${DESTDIR}/usr/local/bin/rdo
-	chmod 4755 ${DESTDIR}/usr/local/bin/rdo
+	mkdir -p ${DESTDIR}${PREFIX}/bin
+	cp rdo ${DESTDIR}${PREFIX}/bin
+	chown root:root ${DESTDIR}${PREFIX}/bin/rdo
+	chmod 4755 ${DESTDIR}${PREFIX}/bin/rdo
 
 uninstall:
-	rm ${DESTDIR}/usr/local/bin/rdo
+	rm ${DESTDIR}${PREFIX}/bin/rdo
 
 clean:
 	rm rdo
