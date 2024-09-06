@@ -26,7 +26,7 @@ static int run_program(char **program, struct passwd *user) {
     }
     return 0;
 }
-
+#ifdef HARDENED
 static void* erase_from_memory(void *s, size_t n)
 {
     volatile unsigned char *p = s;
@@ -35,7 +35,7 @@ static void* erase_from_memory(void *s, size_t n)
     }
     return s;
 }
-
+#endif
 int main(int argc, char** argv) {
     if (argc == 1) {
         printf("Usage: %s [command]\n", argv[0]);
