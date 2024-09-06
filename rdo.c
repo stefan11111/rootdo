@@ -26,6 +26,7 @@ static int run_program(char **program, struct passwd *user) {
     }
     return 0;
 }
+#ifdef REQUIRE_PASSWORD
 #ifdef HARDENED
 static void* erase_from_memory(void *s, size_t n)
 {
@@ -35,6 +36,7 @@ static void* erase_from_memory(void *s, size_t n)
     }
     return s;
 }
+#endif
 #endif
 int main(int argc, char** argv) {
     if (argc == 1) {
