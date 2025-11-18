@@ -48,5 +48,7 @@ By default it is installed in /usr/local/bin.
 ### Usage
 
 ```sh
-rdo [-u -e] [command]
+rdo [command]
+rdo -e [file]
+rdo -u [user] [command]
 ```
